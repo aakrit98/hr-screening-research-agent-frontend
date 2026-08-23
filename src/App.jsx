@@ -3,11 +3,12 @@ import LoginPage from "./pages/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import JobsPage from "./pages/JobsPage.jsx";
 import JobDetailPage from "./pages/JobDetailPage.jsx";
- import AdminCandidatesPage from "./pages/AdminCandidatesPage.jsx";
+import AdminCandidatesPage from "./pages/AdminCandidatesPage.jsx";
 import AdminCandidateDetailPage from "./pages/AdminCandidateDetailPage.jsx";
- import AdminJobsPage from "./pages/AdminJobsPage.jsx";
-import AdminLayout from "./layouts/AdminLayout.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import DashboardLayout from "./layouts/DashboardLayout.jsx";  
+import AdminLayout from "./layouts/AdminLayout.jsx";  
+
 
 function App() {
   return (
@@ -16,23 +17,28 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
 
+        {/* candidate routes — share the sidebar layout */}
         <Route
-          path="/jobs"
-          element={<ProtectedRoute allowedRoles={["user"]}><JobsPage /></ProtectedRoute>}
-        />
-        <Route
-          path="/jobs/:jobId"
-          element={<ProtectedRoute allowedRoles={["user"]}><JobDetailPage /></ProtectedRoute>}
-        />
-
-        {/* Admin routes all share the sidebar layout */}
-        <Route
-          path="/admin"
-          element={<ProtectedRoute allowedRoles={["admin"]}><AdminLayout /></ProtectedRoute>}
+          element={
+            <ProtectedRoute allowedRoles={["user"]}>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
         >
-          <Route path="jobs" element={<AdminJobsPage />} />
-         <Route path="candidates" element={<AdminCandidatesPage />} />
-          <Route path="candidates/:candidateId" element={<AdminCandidateDetailPage />} />
+          <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/jobs/:jobId" element={<JobDetailPage />} />
+        </Route>
+
+        {/* admin routes — share the sidebar layout */}
+        <Route
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/admin/candidates" element={<AdminCandidatesPage />} />
+          <Route path="/admin/candidates/:candidateId" element={<AdminCandidateDetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
