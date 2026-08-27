@@ -8,7 +8,8 @@ import AdminCandidateDetailPage from "./pages/AdminCandidateDetailPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";  
 import AdminLayout from "./layouts/AdminLayout.jsx";  
-import MyApplicationsPage from "./pages/MyApplicationsPage.jsx";
+import MyApplicationsPage from "./pages/MyApplicationsPage.jsx"; 
+import AdminJobPage from "./pages/AdminJobsPage.jsx";
 
 function App() {
   return (
@@ -38,7 +39,8 @@ function App() {
           }
         >
           <Route path="/admin/candidates" element={<AdminCandidatesPage />} />
-          <Route path="/admin/candidates/:candidateId" element={<AdminCandidateDetailPage />} />
+          <Route path="/admin/candidates/:candidateId" element={<AdminCandidateDetailPage />} /> 
+          <Route path = "/admin/jobs" element = {<AdminJobPage/>}/>
         </Route> 
 
         <Route path="/my-applications" element={<MyApplicationsPage />} />
