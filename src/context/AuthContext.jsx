@@ -31,4 +31,5 @@ export function AuthProvider({ children }) {
 // custom hook so components can just do: const { user, login, logout } = useAuth();
 export function useAuth() {
   return useContext(AuthContext);
-}
+} 
+
