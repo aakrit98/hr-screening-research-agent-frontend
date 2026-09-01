@@ -226,7 +226,7 @@ function LoginPage() {
       login(user, token);
 
       if (user.role === "admin") {
-        navigate("/admin/candidates");
+navigate("/admin");
       } else {
         navigate("/jobs");
       }

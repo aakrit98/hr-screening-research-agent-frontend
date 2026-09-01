@@ -86,11 +86,7 @@ function AdminCandidatesPage() {
 
   return (
     <div style={{ maxWidth: 1000, margin: "0 auto", padding: 24 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-        <Title level={2} style={{ margin: 0 }}>Candidates</Title>
-        <Button onClick={handleLogout}>Log Out</Button>
-      </div>
-
+     
       {error && <Alert message={error} type="error" showIcon style={{ marginBottom: 16 }} />}
 
       <Table

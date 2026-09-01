@@ -7,6 +7,7 @@ import {
   ProjectOutlined,
   TeamOutlined,
   BarChartOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "../context/AuthContext.jsx";
 
@@ -23,11 +24,12 @@ function DashboardLayout() {
     { key: "/my-applications", icon: <FileTextOutlined />, label: "My Applications" },
   ];
 
-  const adminItems = [
-    { key: "/admin/jobs", icon: <ProjectOutlined />, label: "Job Management" },
-    { key: "/admin/candidates", icon: <TeamOutlined />, label: "Screening" },
-    { key: "/admin/analytics", icon: <BarChartOutlined />, label: "Analytics" },
-  ];
+const adminItems = [
+  { key: "/admin", icon: <HomeOutlined />, label: "Dashboard" },
+  { key: "/admin/jobs", icon: <ProjectOutlined />, label: "Job Management" },
+  { key: "/admin/candidates", icon: <TeamOutlined />, label: "Screening" },
+  { key: "/admin/analytics", icon: <BarChartOutlined />, label: "Analytics" },
+];
 
   const menuItems = user?.role === "admin" ? adminItems : candidateItems;
 

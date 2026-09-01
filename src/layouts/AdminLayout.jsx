@@ -25,6 +25,8 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
   ThunderboltOutlined,
+  HomeOutlined,
+  BarChartOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "../context/AuthContext.jsx";
 
@@ -38,8 +40,11 @@ function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false);
 
   const menuItems = [
-    { key: "/admin/jobs", icon: <ProjectOutlined />, label: "Job Management" },
-    { key: "/admin/candidates", icon: <TeamOutlined />, label: "Screening" },
+       { key: "/admin", icon: <HomeOutlined />, label: "Dashboard" },
+
+    { key: "/admin/jobs", icon: <ProjectOutlined />, label: "Job Management" }, 
+    { key: "/admin/candidates", icon: <TeamOutlined />, label: "Screening" }, 
+     { key: "/admin/analytics", icon: <BarChartOutlined />, label: "Analytics" },
   ];
 
   function handleLogout() {
