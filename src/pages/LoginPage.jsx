@@ -21,6 +21,7 @@ import {
 
 import api from "../api/axios.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import { GoogleLogin } from "@react-oauth/google";
 
 const { Title, Text } = Typography;
 
@@ -235,6 +236,29 @@ navigate("/admin");
     } finally {
       setLoading(false);
     }
+  } 
+
+  async function handleGoogleSuccess(credentialResponse) {
+    setError(" ") ; 
+    setLoading (true); 
+    try {
+      const  response = await api.post("/auth/google" , { 
+        credential : credentialResponse.credential,
+      }); 
+      const {token , user} = response.data ; 
+
+      login(user ,token); 
+
+      if(user.role === "admin") { 
+        navigate("/admin"); 
+      } else { 
+        navigate("/jobs"); 
+      } 
+    } catch (error) {
+      setError(err.response?.data?.error || "Google sign in failed"); 
+    } finally { 
+       setLoading(false);
+    }
   }
 
   return (
@@ -379,7 +403,7 @@ navigate("/admin");
         </Divider>
 
         {/* Google */}
-        <Button
+        {/* <Button
           block
           icon={
             <GoogleOutlined
@@ -395,7 +419,18 @@ navigate("/admin");
           }}
         >
           Google
-        </Button>
+        </Button> */} 
+
+        <div style={{textAlign: "center" , margin: "16px 0"}}> 
+            <Text type="secondary">or</Text>
+        </div> 
+
+        <div style={{display : "flex" , justifyContent : "center"}}>  
+           <GoogleLogin  
+                onSuccess={handleGoogleSuccess} 
+                onError={() => setError("Google sign in failed")}
+           />
+        </div>
 
         {/* LinkedIn */}
         <Button

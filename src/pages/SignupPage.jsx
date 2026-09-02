@@ -3,8 +3,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { Form, Input, Button, Typography, Alert } from "antd";
 import api from "../api/axios.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import { GoogleLogin } from "@react-oauth/google";
 
-const { Title } = Typography;
+const { Title , Text } = Typography;
 
 function SignupPage() {
   const [error, setError] = useState("");
@@ -25,7 +26,27 @@ function SignupPage() {
     } finally {
       setLoading(false);
     }
-  }
+  } 
+
+
+  async function handleGoogleSuccess(credentialResponse) { 
+      setError(""); 
+      setLoading(true); 
+      try{ 
+          const response = await api.post("/auth/google" , { 
+            credential :  credentialResponse.credential, 
+          });  
+          const {token , user} = response.data; 
+
+          login(user,token); 
+          navigate("/jobs");
+      } catch (err) {  
+         setError(err.response?.data?.error || "Google sign in failed"); 
+      } finally { 
+        setLoading(false);
+      }
+  } 
+
 
   return (
     <div>
@@ -47,7 +68,18 @@ function SignupPage() {
       </Form>
       <div style={{ textAlign: "center", marginTop: 8 }}>
         Already have an account? <Link to="/login">Log in</Link>
-      </div>
+      </div> 
+
+      <div style={{ textAlign: "center", margin: "16px 0" }}>
+  <Text type="secondary">or</Text>
+</div>
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <GoogleLogin
+    onSuccess={handleGoogleSuccess}
+    onError={() => setError("Google sign-in failed")}
+  />
+</div>
     </div>
   );
 }
